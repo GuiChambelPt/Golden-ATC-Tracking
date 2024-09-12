@@ -69,7 +69,7 @@ const AirportDetail = ({ airports }) => {
     const airportStyle = new Style({
       image: new Icon({
         anchor: [0.5, 1],
-        src: 'https://openlayers.org/en/latest/examples/data/icon.png'
+        src: 'https://wallpapers.com/images/high/airport-location-pin-icon-8d4st3js9n04t1nx-2.png'
       })
     });
 
@@ -77,6 +77,7 @@ const AirportDetail = ({ airports }) => {
 
     // Add flight markers
     const flightFeatures = nearbyFlights.map(flight => {
+      console.log(flight)
       const feature = new Feature({
         geometry: new Point(fromLonLat([flight.lon, flight.lat]))
       });
@@ -84,7 +85,8 @@ const AirportDetail = ({ airports }) => {
       const flightStyle = new Style({
         image: new Icon({
           anchor: [0.5, 0.5],
-          src: 'https://openlayers.org/en/latest/examples/data/airplane.png',
+          src: 'https://png.pngtree.com/png-clipart/20230109/original/pngtree-top-view-white-airplane-with-four-engines-png-image_8893925.png',
+          scale: 0.05, // Adjust the scale factor to make the icon smaller (0.5 means 50% of original size)
           rotation: (flight.track || 0) * Math.PI / 180 // Convert degrees to radians
         })
       });
@@ -139,6 +141,7 @@ const AirportDetail = ({ airports }) => {
         <h3>Nearby Flights</h3>
         <ul>
           {nearbyFlights.map(flight => (
+            
             <li key={flight.hex}>
               {flight.flight || 'Unknown'} - Altitude: {flight.alt_baro || 'Unknown'} ft
             </li>
