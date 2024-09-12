@@ -1,9 +1,7 @@
 # Golden ATC Tracking
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/opensource.svg" width="100" height="100" alt="Open Source Logo" />
-  <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/react.svg" width="100" height="100" alt="React Logo" />
-  <img src="https://raw.githubusercontent.com/openlayers/openlayers.github.io/master/assets/logo.svg" width="100" height="100" alt="OpenLayers Logo" />
+  
 </div>
 
 Golden ATC Tracking is an open-source web application that allows users to track planes in real-time and listen to live air traffic control (ATC) communications. This project combines the power of React for the user interface, OpenLayers for map rendering, and LiveATC for audio streaming.
