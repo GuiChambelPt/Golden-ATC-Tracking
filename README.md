@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# Golden ATC Tracking
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
+  <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/opensource.svg" width="100" height="100" alt="Open Source Logo" />
+  <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/react.svg" width="100" height="100" alt="React Logo" />
+  <img src="https://raw.githubusercontent.com/openlayers/openlayers.github.io/master/assets/logo.svg" width="100" height="100" alt="OpenLayers Logo" />
+</div>
 
-## Available Scripts
+Golden ATC Tracking is an open-source web application that allows users to track planes in real-time and listen to live air traffic control (ATC) communications. This project combines the power of React for the user interface, OpenLayers for map rendering, and LiveATC for audio streaming.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Real-time plane tracking on an interactive map
+- Live ATC audio streaming
+- User-friendly interface built with React
+- Responsive design for desktop and mobile devices
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Technologies Used
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- React: A JavaScript library for building user interfaces
+- OpenLayers: A high-performance, feature-packed library for creating interactive maps on the web
+- LiveATC: Integration for streaming live air traffic control audio
 
-### `npm test`
+## Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/golden-atc-tracking.git
+   ```
+2. Navigate to the project directory:
+   ```
+   cd golden-atc-tracking
+   ```
+3. Install dependencies:
+   ```
+   npm install
+   ```
+4. Start the development server:
+   ```
+   npm start
+   ```
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+After starting the development server, open your web browser and navigate to `http://localhost:3000` to use the application. You can interact with the map to track planes and use the audio controls to listen to live ATC communications.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Contributing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+We welcome contributions to Golden ATC Tracking! If you're interested in helping improve the project, here are some ways you can contribute:
 
-### `npm run eject`
+1. **Report bugs**: If you find a bug, please open an issue in the GitHub repository with a clear description of the problem and steps to reproduce it.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Suggest enhancements**: Have ideas for new features or improvements? Open an issue to discuss your suggestions.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Submit pull requests**: If you've fixed a bug or implemented a new feature, feel free to submit a pull request. Please make sure to follow the existing code style and include appropriate tests.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. **Improve documentation**: Help us improve our documentation by fixing errors, adding examples, or clarifying instructions.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+5. **Spread the word**: If you enjoy using Golden ATC Tracking, consider sharing it with others who might find it useful.
 
-## Learn More
+To get started with contributing code:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Fork the repository
+2. Create a new branch for your feature or bug fix
+3. Make your changes and commit them with clear, descriptive commit messages
+4. Push your changes to your fork
+5. Submit a pull request to the main repository
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Please read our [Contributing Guidelines](CONTRIBUTING.md) for more detailed information on our development process and code standards.
 
-### Code Splitting
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+This project is open-source and available under the MIT License.
 
-### Analyzing the Bundle Size
+## Contact
+GuiChambelPt
+discord: @gatinhosfofinhos
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Thank you for your interest in Golden ATC Tracking!

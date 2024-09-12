@@ -23,7 +23,6 @@ const airports = [
   // Add more airports as needed
 ];
 
-<FlightMap airport={airport} />
 
 const App = () => {
   return (
