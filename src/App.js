@@ -1,155 +1,141 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import 'ol/ol.css';
-import Map from 'ol/Map';
-import View from 'ol/View';
-import TileLayer from 'ol/layer/Tile';
+import React, { useEffect, useState } from 'react';
+import { Map, View } from 'ol';
 import OSM from 'ol/source/OSM';
-import { fromLonLat } from 'ol/proj';
+import TileLayer from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { Vector as VectorLayer } from 'ol/layer';
-import { Vector as VectorSource } from 'ol/source';
-import { Style, Icon } from 'ol/style';
+import { Icon, Style } from 'ol/style';
+import Select from 'ol/interaction/Select';
+import { transform } from 'ol/proj';
+import 'ol/ol.css'; // Import OpenLayers CSS
+import './MapPage.css'; // Import your custom CSS
+import { airports } from './data/airportsdata'; // Import airports data
 
-const AirportDetail = ({ airports }) => {
-  const { id } = useParams();
-  const mapRef = useRef();
-  const mapInstanceRef = useRef(null);
-  const [showATCPlayer, setShowATCPlayer] = useState(false);
-  const [nearbyFlights, setNearbyFlights] = useState([]);
+const API_KEY = 'YOUR-API-KEY'; // Replace with your AirLabs API key
 
-  const airport = airports.find(a => a.id === id);
-
-  useEffect(() => {
-    if (!airport) return;
-
-    const fetchNearbyFlights = async () => {
-      try {
-        const response = await fetch(`https://api.airplanes.live/v2/point/${airport.lat}/${airport.lon}/170`);
-        const data = await response.json();
-        setNearbyFlights(data.ac || []);
-      } catch (error) {
-        console.error('Error fetching nearby flights:', error);
-      }
-    };
-
-    fetchNearbyFlights();
-    const interval = setInterval(fetchNearbyFlights, 60000); // Update every minute
-
-    return () => clearInterval(interval);
-  }, [airport]);
+const MapPage = () => {
+  const [selectedAirport, setSelectedAirport] = useState(null);
+  const [airportName, setAirportName] = useState('');
+  const [airportInfo, setAirportInfo] = useState(null);
 
   useEffect(() => {
-    if (!airport) return;
-
-    const map = new Map({
-      target: mapRef.current,
-      layers: [
-        new TileLayer({
-          source: new OSM()
-        })
-      ],
-      view: new View({
-        center: fromLonLat([airport.lon, airport.lat]),
-        zoom: 10,
-        maxZoom: 12,
-        minZoom: 8
-      })
-    });
-
-    // Lock the view to the airport
-    map.getView().setCenter(fromLonLat([airport.lon, airport.lat]));
-
-    // Add airport marker
-    const airportFeature = new Feature({
-      geometry: new Point(fromLonLat([airport.lon, airport.lat]))
-    });
-
-    const airportStyle = new Style({
-      image: new Icon({
-        anchor: [0.5, 1],
-        src: 'https://wallpapers.com/images/high/airport-location-pin-icon-8d4st3js9n04t1nx-2.png'
-      })
-    });
-
-    airportFeature.setStyle(airportStyle);
-
-    // Add flight markers
-    const flightFeatures = nearbyFlights.map(flight => {
-      console.log(flight)
-      const feature = new Feature({
-        geometry: new Point(fromLonLat([flight.lon, flight.lat]))
-      });
-      
-      const flightStyle = new Style({
-        image: new Icon({
-          anchor: [0.5, 0.5],
-          src: 'https://png.pngtree.com/png-clipart/20230109/original/pngtree-top-view-white-airplane-with-four-engines-png-image_8893925.png',
-          scale: 0.05, // Adjust the scale factor to make the icon smaller (0.5 means 50% of original size)
-          rotation: (flight.track || 0) * Math.PI / 180 // Convert degrees to radians
-        })
-      });
-
-      feature.setStyle(flightStyle);
-      return feature;
-    });
-
+    // Create a vector source and layer for the markers
     const vectorSource = new VectorSource({
-      features: [airportFeature, ...flightFeatures]
+      features: airports.map(airport => {
+        // Transform coordinates from EPSG:4326 to EPSG:3857 (Web Mercator)
+        const coords = transform(airport.coordinates, 'EPSG:4326', 'EPSG:3857');
+        return new Feature({
+          geometry: new Point(coords),
+          name: airport.name,
+          radio: airport.radio,
+          iata: airport.iata
+        });
+      })
     });
 
     const vectorLayer = new VectorLayer({
-      source: vectorSource
+      source: vectorSource,
+      style: new Style({
+        image: new Icon({
+          anchor: [0.5, 1],
+          src: 'https://cdn1.iconfinder.com/data/icons/location-9/49/airport-pin-512.png',
+          scale: 0.1 // Scale the icon if needed
+        })
+      })
     });
 
-    map.addLayer(vectorLayer);
+    // Initialize the map
+    const map = new Map({
+      target: 'map',
+      layers: [
+        new TileLayer({
+          source: new OSM()
+        }),
+        vectorLayer
+      ],
+      view: new View({
+        center: transform([-9.133832798, 38.771163582], 'EPSG:4326', 'EPSG:3857'), // Center on Lisbon Airport
+        zoom: 10
+      })
+    });
 
-    mapInstanceRef.current = map;
+    // Handle click events on features (markers)
+    const selectInteraction = new Select({
+      filter: (feature) => true // Select all features
+    });
+    map.addInteraction(selectInteraction);
 
-    return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.setTarget(null);
+    selectInteraction.on('select', async (event) => {
+      const selectedFeature = event.selected[0];
+      if (selectedFeature) {
+        const name = selectedFeature.get('name');
+        const radioUrl = selectedFeature.get('radio');
+        const iata = selectedFeature.get('iata');
+        
+        setAirportName(name);
+        setSelectedAirport(radioUrl);
+
+        // Fetch additional airport info from AirLabs API
+        try {
+          const response = await fetch(`https://airlabs.co/api/v9/airports?iata_code=${iata}&api_key=${API_KEY}`);
+          const data = await response.json();
+          setAirportInfo(data.response[0]); // Assuming the response is an array
+        } catch (error) {
+          console.error('Error fetching airport data:', error);
+          setAirportInfo(null);
+        }
+      } else {
+        setAirportName('');
+        setSelectedAirport(null);
+        setAirportInfo(null);
       }
+    });
+
+    // Cleanup map instance on component unmount
+    return () => {
+      map.setTarget(null);
     };
-  }, [airport, nearbyFlights]);
-
-  const toggleATCPlayer = () => {
-    setShowATCPlayer(!showATCPlayer);
-  };
-
-  if (!airport) {
-    return <div>Airport not found</div>;
-  }
+  }, []);
 
   return (
-    <div className="airport-detail">
-      <h2>{airport.name} ({airport.id})</h2>
-      <div ref={mapRef} style={{ width: '100%', height: '500px' }}></div>
-      <button onClick={toggleATCPlayer}>
-        {showATCPlayer ? 'Hide ATC Audio' : 'Listen to ATC'}
-      </button>
-      {showATCPlayer && (
-        <div className="atc-player">
+    <div className="map-container">
+      <header className="header-bar">
+        <h1>Golden ATC Tracking</h1>
+        <nav className="options-menu">
+          <button>Option 1</button>
+          <button>Option 2</button>
+          <button>Option 3</button>
+        </nav>
+      </header>
+      <div id="map" className="map"></div>
+      {airportName && (
+        <div className="info-box">
+          <h2>{airportName}</h2>
+          {airportInfo && (
+            <div>
+              <p><strong>City:</strong> {airportInfo.city}</p>
+              <p><strong>Country:</strong> {airportInfo.country_name}</p>
+              <p><strong>ICAO Code:</strong> {airportInfo.icao_code}</p>
+              <p><strong>Latitude:</strong> {airportInfo.latitude}</p>
+              <p><strong>Longitude:</strong> {airportInfo.longitude}</p>
+            </div>
+          )}
+          {!airportInfo && <p>Loading airport details...</p>}
+        </div>
+      )}
+      {selectedAirport && (
+        <div className="radio-box">
+          <p>Playing Radio:</p>
           <audio controls autoPlay>
-            <source src={airport.atcLink} type="audio/mpeg" />
+            <source src={selectedAirport} type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
         </div>
       )}
-      <div>
-        <h3>Nearby Flights</h3>
-        <ul>
-          {nearbyFlights.map(flight => (
-            
-            <li key={flight.hex}>
-              {flight.flight || 'Unknown'} - Altitude: {flight.alt_baro || 'Unknown'} ft
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 };
 
-export default AirportDetail;
+export default MapPage;

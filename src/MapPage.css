@@ -1,0 +1,86 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.map-container {
+  position: relative;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-bar {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-bar h1 {
+  margin: 0;
+}
+
+.options-menu {
+  display: flex;
+  gap: 10px;
+}
+
+.options-menu button {
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.options-menu button:hover {
+  background-color: #777;
+}
+
+.map {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.info-box {
+  position: absolute;
+  bottom: 300px; /* Position it above the radio box */
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 300px;
+}
+
+.info-box p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.radio-box {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 300px;
+}
+
+.radio-box p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
