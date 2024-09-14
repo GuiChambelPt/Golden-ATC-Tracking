@@ -21,22 +21,33 @@ Golden ATC Tracking is an open-source web application that allows users to track
 
 ## Installation
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/golden-atc-tracking.git
-   ```
-2. Navigate to the project directory:
-   ```
-   cd golden-atc-tracking
-   ```
-3. Install dependencies:
-   ```
-   npm install
-   ```
-4. Start the development server:
-   ```
-   npm start
-   ```
+### 1. Fork the Repository
+
+Start by forking the repository on GitHub. This will create a copy of the repository under your own GitHub account.
+
+### 2. Clone Your Fork
+
+Clone your fork to your local machine:
+
+```
+git clone https://github.com/GuiChambelPt/Golden-ATC-Tracking.git
+cd Golden-ATC-Tracking
+```
+
+### 3. Install Dependencies
+Make sure you have Node.js and npm installed. Then, install the project dependencies:
+
+```
+npm install
+```
+
+### 4. Start the Development Server
+Run the development server to see the application in action:
+
+```
+npm start
+```
+This will start the app on http://localhost:3000.
 
 ## Usage
 

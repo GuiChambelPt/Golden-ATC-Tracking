@@ -13,8 +13,8 @@ Start by forking the repository on GitHub. This will create a copy of the reposi
 Clone your fork to your local machine:
 
 ```
-git clone https://github.com/your-username/airport-map-live-radio.git
-cd airport-map-live-radio
+git clone https://github.com/GuiChambelPt/Golden-ATC-Tracking.git
+cd Golden-ATC-Tracking
 ```
 
 ### 3. Install Dependencies
@@ -62,10 +62,10 @@ Go to your fork on GitHub and create a pull request to merge your changes into t
 Here are some areas where you can contribute:
 
 - Make Planes Appear on the Map
-- Improve UI/UX
-- Expand the list of airports
-- Improve Error Handling
-- Optimize Performance
+- Fix Api 
+- Improve UI
+- Fix some bugs
+- Add more airports
 
 ## License
 By contributing to this project, you agree that your contributions will be licensed under the MIT License. See the LICENSE file for more details.
